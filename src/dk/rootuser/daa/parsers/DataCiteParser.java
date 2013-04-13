@@ -37,7 +37,7 @@ public class DataCiteParser {
 		File xml = new File(filePath);
 		
 		if(!xml.exists())
-			throw new FileNotFoundException("Didn't find " + xml.getAbsoluteFile());
+			throw new FileNotFoundException("Couldn't find " + xml.getAbsoluteFile());
 		
 		parser.parse(xml, handler);
 		
