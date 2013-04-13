@@ -33,6 +33,14 @@ public class cli {
 			System.exit(-1);
 		}
 		
+		if(args.length == 1 && args[0].equalsIgnoreCase("-h")) {
+			System.out.println("This program can parse any number of datacite metadata files, as long as your memory permits it\n");
+			System.out.println("-h\t\t\tShows this help");
+			System.out.println("title.<SortType>\tSortType can be of asc or desc");
+			System.out.println("\nUsage example: java -jar dda.jar xml1.xml xml2.xml title.asc");
+			System.exit(0);
+		}
+		
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
 		DataCiteParser parser = null;
@@ -58,6 +66,11 @@ public class cli {
 			System.exit(-3);
 		}
 		
+		if(filesToParse.size() == 0) {
+			System.out.println("Please provide me with some files");
+			System.exit(0);
+		}
+		
 		System.out.println("you gave me " + filesToParse.size() + " files to crunch");
 		if(titleSortOrder != SortOrder.NONE)
 			System.out.println("Sorting the titles " + (titleSortOrder == SortOrder.ASC ? "ascending" : "descending"));
@@ -79,7 +92,7 @@ public class cli {
 			} catch (SAXException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		
 		parsingTook = System.currentTimeMillis() - parsingStarted;
