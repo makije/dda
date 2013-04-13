@@ -29,7 +29,6 @@ public class cli {
 			System.out.println("Please provide some files to me");
 			System.exit(-1);
 		}
-			
 		
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
@@ -37,25 +36,20 @@ public class cli {
 		
 		try {
 			parser = DataCiteParser.getInstance();
+			
+			for(String s : args)
+				resources.add(parser.parse(s));
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			System.exit(-2);
 		} catch (SAXException e) {
 			e.printStackTrace();
 			System.exit(-3);
-		}
-		
-		try {
-			
-			for(String s : args)
-				resources.add(parser.parse(s));
-			
-		} catch (SAXException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(-4);
 		}
-
+		
 		int resourceNumber = 0;
 		
 		for(Resource r : resources) {
