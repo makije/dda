@@ -8,8 +8,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import dk.rootuser.daa.handlerhelpers.DataCiteHandlerHelper;
 import dk.rootuser.daa.pojos.datacite.Creator;
+import dk.rootuser.daa.pojos.datacite.Date;
 import dk.rootuser.daa.pojos.datacite.Identifier;
 import dk.rootuser.daa.pojos.datacite.Resource;
+import dk.rootuser.daa.pojos.datacite.ResourceType;
 import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
 
@@ -36,6 +38,13 @@ public class DataCiteHandler extends DefaultHandler {
 	
 	private boolean isInSubjects = false;
 	private boolean isInSubject = false;
+	
+	private boolean isInDates = false;
+	private boolean isInDate = false;
+	
+	private boolean isInLanguage = false;
+	
+	private boolean isInResourceType = false;
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -75,6 +84,15 @@ public class DataCiteHandler extends DefaultHandler {
 			resource.setSubjects(new ArrayList<Subject>());
 		} else if(tag.equals(DataCiteHandlerHelper.SUBJECT_TAG)) {
 			isInSubject = true;
+		} else if(tag.equals(DataCiteHandlerHelper.DATES_TAG)) {
+			isInDates = true;
+			resource.setDates(new ArrayList<Date>());
+		} else if(tag.equals(DataCiteHandlerHelper.DATE_TAG)) {
+			isInDate = true;
+		} else if(tag.equals(DataCiteHandlerHelper.LANGUAGE_TAG)) {
+			isInLanguage = true;
+		} else if(tag.equals(DataCiteHandlerHelper.RESOURCE_TYPE_TAG)) {
+			isInResourceType = true;
 		}
 		
 	}
@@ -119,6 +137,24 @@ public class DataCiteHandler extends DefaultHandler {
 						s.setSubjectScheme(attributes.getValue(subjectScheme));
 					resource.getSubjects().add(s);
 				}
+			} else if(isInDates) {
+				if(isInDate) {
+					int dateType;
+					Date d = new Date();
+					d.setDate(new String(ch, start, length));
+					if((dateType = attributes.getIndex(DataCiteHandlerHelper.DATE_TYPE)) >= 0)
+						d.setDateType(attributes.getValue(dateType));
+					resource.getDates().add(d);
+				}
+			} else if(isInLanguage) {
+				resource.setLanguage(new String(ch, start, length));
+			} else if(isInResourceType) {
+				int resourceType;
+				ResourceType rt = new ResourceType();
+				rt.setResourceType(new String(ch, start, length));
+				if((resourceType = attributes.getIndex(DataCiteHandlerHelper.RESOURCE_TYPE_GENERAL)) >= 0)
+					rt.setResourceTypeGeneral(attributes.getValue(resourceType));
+				resource.setResourceType(rt);
 			}
 			
 		}
@@ -156,6 +192,14 @@ public class DataCiteHandler extends DefaultHandler {
 			isInSubjects = false;
 		} else if(tag.equals(DataCiteHandlerHelper.SUBJECT_TAG)) {
 			isInSubject = false;
+		} else if(tag.equals(DataCiteHandlerHelper.DATES_TAG)) {
+			isInDates = false;
+		} else if(tag.equals(DataCiteHandlerHelper.DATE_TAG)) {
+			isInDate = false;
+		} else if(tag.equals(DataCiteHandlerHelper.LANGUAGE_TAG)) {
+			isInLanguage = false;
+		} else if(tag.equals(DataCiteHandlerHelper.RESOURCE_TYPE_TAG)) {
+			isInResourceType = false;
 		}
 	}
 	

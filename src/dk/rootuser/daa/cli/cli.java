@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 
 import dk.rootuser.daa.parsers.DataCiteParser;
 import dk.rootuser.daa.pojos.datacite.Creator;
+import dk.rootuser.daa.pojos.datacite.Date;
 import dk.rootuser.daa.pojos.datacite.Resource;
 import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
@@ -78,6 +79,17 @@ public class cli {
 					System.out.println("\t\"" + s.getSubject() + "\"" + ( s.getSubjectScheme() != null ? " (Scheme: " + s.getSubjectScheme() + ")" : "" ));
 			}
 			
+			if(r.getDates() != null) {
+				System.out.println("Dates");
+				for(Date d : r.getDates())
+					System.out.println("\t" + d.getDate() + ( d.getDateType() != null ? " (DateType: " + d.getDateType() + ")" : "" ));
+			}
+			
+			System.out.println("Language: " + r.getLanguage());
+			
+			if(r.getResourceType() != null) {
+				System.out.println("ResourceType: " + r.getResourceType().getResourceType() + (r.getResourceType().getResourceTypeGeneral() != null ? " (ResourceTypeGeneral: " + r.getResourceType().getResourceTypeGeneral() + ")" : "" ));
+			}
 			
 			System.out.println();
 			resourceNumber++;

@@ -23,4 +23,13 @@ public class DataCiteHandlerHelper {
 	public static final String SUBJECT_TAG = "subject";
 	public static final String SUBJECT_SCHEME = "subjectScheme";
 	
+	public static final String DATES_TAG = "dates";
+	public static final String DATE_TAG = "date";
+	public static final String DATE_TYPE = "dateType";
+	
+	public static final String LANGUAGE_TAG = "language";
+	
+	public static final String RESOURCE_TYPE_TAG = "resourceType";
+	public static final String RESOURCE_TYPE_GENERAL = "resourceTypeGeneral";
+	
 }

@@ -13,7 +13,7 @@ public class Resource {
 	private List<Contributer> contributers;
 	private List<Date> dates;
 	private String language;
-	private String resourceType;
+	private ResourceType resourceType;
 	private List<AlternateIdentifier> alternateIdentifiers;
 	private List<RelatedIdentifiers> relatedIdentifiers;
 	private List<Size> sizes;
@@ -94,11 +94,11 @@ public class Resource {
 		this.language = language;
 	}
 
-	public String getResourceType() {
+	public ResourceType getResourceType() {
 		return resourceType;
 	}
 
-	public void setResourceType(String resourceType) {
+	public void setResourceType(ResourceType resourceType) {
 		this.resourceType = resourceType;
 	}
 
