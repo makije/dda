@@ -8,9 +8,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import dk.rootuser.daa.parsers.DataCiteParser;
+import dk.rootuser.daa.pojos.datacite.AlternateIdentifier;
 import dk.rootuser.daa.pojos.datacite.Creator;
 import dk.rootuser.daa.pojos.datacite.Date;
+import dk.rootuser.daa.pojos.datacite.Description;
+import dk.rootuser.daa.pojos.datacite.Format;
 import dk.rootuser.daa.pojos.datacite.Resource;
+import dk.rootuser.daa.pojos.datacite.Size;
 import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
 
@@ -89,6 +93,34 @@ public class cli {
 			
 			if(r.getResourceType() != null) {
 				System.out.println("ResourceType: " + r.getResourceType().getResourceType() + (r.getResourceType().getResourceTypeGeneral() != null ? " (ResourceTypeGeneral: " + r.getResourceType().getResourceTypeGeneral() + ")" : "" ));
+			}
+			
+			if(r.getAlternateIdentifiers() != null) {
+				System.out.println("AlternateIdentifiers");
+				for(AlternateIdentifier a : r.getAlternateIdentifiers())
+					System.out.println("\t" + a.getAlternateIdentifier() + (a.getAlternateIdentifierType() != null ? " (Type: " + a.getAlternateIdentifierType() + ")" : "" ));
+			}
+			
+			if(r.getSizes() != null) {
+				System.out.println("Sizes");
+				for(Size s : r.getSizes())
+					System.out.println("\t" + s.getSize());
+			}
+			
+			if(r.getFormats() != null) {
+				System.out.println("Formats");
+				for(Format f : r.getFormats())
+					System.out.println("\t" + f.getFormat());
+			}
+			
+			System.out.println("Version: " + r.getVersion());
+			
+			System.out.println("Rights: " + r.getRights());
+			
+			if(r.getDescriptions() != null) {
+				System.out.println("Description");
+				for(Description d : r.getDescriptions())
+					System.out.println("\t" + d.getDescription() + (d.getDescriptionType() != null ? " (Type: " + d.getDescriptionType() + ")" : "" ));
 			}
 			
 			System.out.println();

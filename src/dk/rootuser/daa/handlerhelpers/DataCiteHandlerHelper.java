@@ -32,4 +32,21 @@ public class DataCiteHandlerHelper {
 	public static final String RESOURCE_TYPE_TAG = "resourceType";
 	public static final String RESOURCE_TYPE_GENERAL = "resourceTypeGeneral";
 	
+	public static final String ALTERNATEINDENTIFIERS_TAG = "alternateIdentifiers";
+	public static final String ALTERNATEINDENTIFIER_TAG = "alternateIdentifier";
+	public static final String ALTERNATEINDENTIFIER_TYPE = "alternateIdentifierType";
+	
+	public static final String SIZES_TAG = "sizes";
+	public static final String SIZE_TAG = "size";
+	
+	public static final String FORMATS_TAG = "formats";
+	public static final String FORMAT_TAG = "format";
+
+	public static final String VERSION_TAG = "version";
+	
+	public static final String RIGHTS_TAG = "rights";
+	
+	public static final String DESCRIPTIONS_TAG = "descriptions";
+	public static final String DESCRIPTION_TAG = "description";
+	public static final String DESCRIPTION_TYPE = "descriptionType";
 }

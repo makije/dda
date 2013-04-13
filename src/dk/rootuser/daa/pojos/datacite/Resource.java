@@ -19,7 +19,7 @@ public class Resource {
 	private List<Size> sizes;
 	private List<Format> formats;
 	private String version;
-	private List<Right> rights;
+	private String rights;
 	private List<Description> descriptions;
 	
 	public Identifier getIdentifier() {
@@ -143,11 +143,11 @@ public class Resource {
 		this.version = version;
 	}
 
-	public List<Right> getRights() {
+	public String getRights() {
 		return rights;
 	}
 
-	public void setRights(List<Right> rights) {
+	public void setRights(String rights) {
 		this.rights = rights;
 	}
 

@@ -7,11 +7,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import dk.rootuser.daa.handlerhelpers.DataCiteHandlerHelper;
+import dk.rootuser.daa.pojos.datacite.AlternateIdentifier;
 import dk.rootuser.daa.pojos.datacite.Creator;
 import dk.rootuser.daa.pojos.datacite.Date;
+import dk.rootuser.daa.pojos.datacite.Description;
+import dk.rootuser.daa.pojos.datacite.Format;
 import dk.rootuser.daa.pojos.datacite.Identifier;
 import dk.rootuser.daa.pojos.datacite.Resource;
 import dk.rootuser.daa.pojos.datacite.ResourceType;
+import dk.rootuser.daa.pojos.datacite.Size;
 import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
 
@@ -45,6 +49,22 @@ public class DataCiteHandler extends DefaultHandler {
 	private boolean isInLanguage = false;
 	
 	private boolean isInResourceType = false;
+	
+	private boolean isInAlternateIdentifiers = false;
+	private boolean isInAlternateIdentifier = false;
+	
+	private boolean isInSizes = false;
+	private boolean isInSize = false;
+	
+	private boolean isInFormats = false;
+	private boolean isInFormat = false;
+	
+	private boolean isInVersion = false;
+	
+	private boolean isInRights = false;
+	
+	private boolean isInDescriptions = false;
+	private boolean isInDescription = false;
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -93,6 +113,30 @@ public class DataCiteHandler extends DefaultHandler {
 			isInLanguage = true;
 		} else if(tag.equals(DataCiteHandlerHelper.RESOURCE_TYPE_TAG)) {
 			isInResourceType = true;
+		} else if(tag.equals(DataCiteHandlerHelper.ALTERNATEINDENTIFIERS_TAG)) {
+			isInAlternateIdentifiers = true;
+			resource.setAlternateIdentifiers(new ArrayList<AlternateIdentifier>());
+		} else if(tag.equals(DataCiteHandlerHelper.ALTERNATEINDENTIFIER_TAG)) {
+			isInAlternateIdentifier = true;
+		} else if(tag.equals(DataCiteHandlerHelper.SIZES_TAG)) {
+			isInSizes = true;
+			resource.setSizes(new ArrayList<Size>());
+		} else if(tag.equals(DataCiteHandlerHelper.SIZE_TAG)) {
+			isInSize = true;
+		} else if(tag.equals(DataCiteHandlerHelper.FORMATS_TAG)) {
+			isInFormats = true;
+			resource.setFormats(new ArrayList<Format>());
+		} else if(tag.equals(DataCiteHandlerHelper.FORMAT_TAG)) {
+			isInFormat = true;
+		} else if(tag.equals(DataCiteHandlerHelper.VERSION_TAG)) {
+			isInVersion = true;
+		} else if(tag.equals(DataCiteHandlerHelper.RIGHTS_TAG)) {
+			isInRights = true;
+		} else if(tag.equals(DataCiteHandlerHelper.DESCRIPTIONS_TAG)) {
+			isInDescriptions = true;
+			resource.setDescriptions(new ArrayList<Description>());
+		} else if(tag.equals(DataCiteHandlerHelper.DESCRIPTION_TAG)) {
+			isInDescription = true;
 		}
 		
 	}
@@ -155,6 +199,40 @@ public class DataCiteHandler extends DefaultHandler {
 				if((resourceType = attributes.getIndex(DataCiteHandlerHelper.RESOURCE_TYPE_GENERAL)) >= 0)
 					rt.setResourceTypeGeneral(attributes.getValue(resourceType));
 				resource.setResourceType(rt);
+			} else if(isInAlternateIdentifiers) {
+				if(isInAlternateIdentifier) {
+					int alternateIdentifierType;
+					AlternateIdentifier a = new AlternateIdentifier();
+					a.setAlternateIdentifier(new String(ch, start, length));
+					if((alternateIdentifierType = attributes.getIndex(DataCiteHandlerHelper.ALTERNATEINDENTIFIER_TYPE)) >= 0)
+						a.setAlternateIdentifierType(attributes.getValue(alternateIdentifierType));
+					resource.getAlternateIdentifiers().add(a);
+				}
+			} else if(isInSizes) {
+				if(isInSize) {
+					Size s = new Size();
+					s.setSize(new String(ch, start, length));
+					resource.getSizes().add(s);
+				}
+			} else if(isInFormats) {
+				if(isInFormat) {
+					Format f = new Format();
+					f.setFormat(new String(ch, start, length));
+					resource.getFormats().add(f);
+				}
+			} else if(isInVersion) {
+				resource.setVersion(new String(ch, start, length));
+			} else if(isInRights) {
+				resource.setRights(new String(ch, start, length));
+			} else if(isInDescriptions) {
+				if(isInDescription) {
+					int descriptionsType;
+					Description d = new Description();
+					d.setDescription(new String(ch, start, length));
+					if((descriptionsType = attributes.getIndex(DataCiteHandlerHelper.DESCRIPTION_TYPE)) >= 0)
+						d.setDescriptionType(attributes.getValue(descriptionsType));
+					resource.getDescriptions().add(d);
+				}
 			}
 			
 		}
@@ -200,6 +278,26 @@ public class DataCiteHandler extends DefaultHandler {
 			isInLanguage = false;
 		} else if(tag.equals(DataCiteHandlerHelper.RESOURCE_TYPE_TAG)) {
 			isInResourceType = false;
+		} else if(tag.equals(DataCiteHandlerHelper.ALTERNATEINDENTIFIERS_TAG)) {
+			isInAlternateIdentifiers = false;
+		} else if(tag.equals(DataCiteHandlerHelper.ALTERNATEINDENTIFIER_TAG)) {
+			isInAlternateIdentifier = false;
+		} else if(tag.equals(DataCiteHandlerHelper.SIZES_TAG)) {
+			isInSizes = false;
+		} else if(tag.equals(DataCiteHandlerHelper.SIZE_TAG)) {
+			isInSize = false;
+		} else if(tag.equals(DataCiteHandlerHelper.FORMATS_TAG)) {
+			isInFormats = false;
+		} else if(tag.equals(DataCiteHandlerHelper.FORMAT_TAG)) {
+			isInFormat = false;
+		} else if(tag.equals(DataCiteHandlerHelper.VERSION_TAG)) {
+			isInVersion = false;
+		} else if(tag.equals(DataCiteHandlerHelper.RIGHTS_TAG)) {
+			isInRights = false;
+		} else if(tag.equals(DataCiteHandlerHelper.DESCRIPTIONS_TAG)) {
+			isInDescriptions = false;
+		} else if(tag.equals(DataCiteHandlerHelper.DESCRIPTION_TAG)) {
+			isInDescription = false;
 		}
 	}
 	
