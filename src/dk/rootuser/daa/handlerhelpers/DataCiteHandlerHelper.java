@@ -15,4 +15,12 @@ public class DataCiteHandlerHelper {
 	public static final String TITLE_TAG = "title";
 	public static final String TITLE_TYPE = "titleType";
 	
+	public static final String PUBLISHER_TAG = "publisher";
+	
+	public static final String PUBLICATION_YEAR_TAG = "publicationYear";
+	
+	public static final String SUBJECTS_TAG = "subjects";
+	public static final String SUBJECT_TAG = "subject";
+	public static final String SUBJECT_SCHEME = "subjectScheme";
+	
 }

@@ -10,6 +10,7 @@ import dk.rootuser.daa.handlerhelpers.DataCiteHandlerHelper;
 import dk.rootuser.daa.pojos.datacite.Creator;
 import dk.rootuser.daa.pojos.datacite.Identifier;
 import dk.rootuser.daa.pojos.datacite.Resource;
+import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
 
 public class DataCiteHandler extends DefaultHandler {
@@ -26,8 +27,15 @@ public class DataCiteHandler extends DefaultHandler {
 	private boolean isInCreator = false;
 	private boolean isInCreatorName = false;
 	
-	private boolean isIntitles;
-	private boolean isIntitle;
+	private boolean isIntitles = false;
+	private boolean isIntitle = false;
+	
+	private boolean isInPublisher = false;
+	
+	private boolean isInPublicationYear = false;
+	
+	private boolean isInSubjects = false;
+	private boolean isInSubject = false;
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -58,6 +66,15 @@ public class DataCiteHandler extends DefaultHandler {
 			resource.setTitles(new ArrayList<Title>());
 		} else if(tag.equals(DataCiteHandlerHelper.TITLE_TAG)) {
 			isIntitle = true;
+		} else if(tag.equals(DataCiteHandlerHelper.PUBLISHER_TAG)) {
+			isInPublisher = true;
+		} else if(tag.equals(DataCiteHandlerHelper.PUBLICATION_YEAR_TAG)) {
+			isInPublicationYear = true;
+		} else if(tag.equals(DataCiteHandlerHelper.SUBJECTS_TAG)) {
+			isInSubjects = true;
+			resource.setSubjects(new ArrayList<Subject>());
+		} else if(tag.equals(DataCiteHandlerHelper.SUBJECT_TAG)) {
+			isInSubject = true;
 		}
 		
 	}
@@ -89,6 +106,19 @@ public class DataCiteHandler extends DefaultHandler {
 						t.setTitleType(attributes.getValue(titleType));
 					resource.getTitles().add(t);
 				}
+			} else if(isInPublisher) {
+				resource.setPublisher(new String(ch, start, length));
+			} else if(isInPublicationYear) {
+				resource.setPublicationYear(new String(ch, start, length));
+			} else if(isInSubjects) {
+				if(isInSubject) {
+					int subjectScheme;
+					Subject s = new Subject();
+					s.setSubject(new String(ch, start, length));
+					if((subjectScheme = attributes.getIndex(DataCiteHandlerHelper.SUBJECT_SCHEME)) >= 0)
+						s.setSubjectScheme(attributes.getValue(subjectScheme));
+					resource.getSubjects().add(s);
+				}
 			}
 			
 		}
@@ -118,6 +148,14 @@ public class DataCiteHandler extends DefaultHandler {
 			isIntitles = false;
 		} else if(tag.equals(DataCiteHandlerHelper.TITLE_TAG)) {
 			isIntitle = false;
+		} else if(tag.equals(DataCiteHandlerHelper.PUBLISHER_TAG)) {
+			isInPublisher = false;
+		} else if(tag.equals(DataCiteHandlerHelper.PUBLICATION_YEAR_TAG)) {
+			isInPublicationYear = false;
+		} else if(tag.equals(DataCiteHandlerHelper.SUBJECTS_TAG)) {
+			isInSubjects = false;
+		} else if(tag.equals(DataCiteHandlerHelper.SUBJECT_TAG)) {
+			isInSubject = false;
 		}
 	}
 	
