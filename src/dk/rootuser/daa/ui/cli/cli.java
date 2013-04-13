@@ -1,4 +1,4 @@
-package dk.rootuser.daa.cli;
+package dk.rootuser.daa.ui.cli;
 
 import java.io.IOException;
 import java.util.ArrayList;
