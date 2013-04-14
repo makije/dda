@@ -1,5 +1,13 @@
 package dk.rootuser.daa.handlerhelpers;
 
+/**
+ * Helper class, holding tags<br/>
+ * Making it easier to reuse them in many classes
+ * 
+ * @author martin
+ * 
+ */
+
 public class DataCiteHandlerHelper {
 
 	public static final String RESOURCE_TAG = "resource";

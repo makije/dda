@@ -25,6 +25,12 @@ import dk.rootuser.daa.pojos.datacite.Resource;
 import dk.rootuser.daa.sorters.SortOrder;
 import dk.rootuser.daa.sorters.TitleSorter;
 
+/**
+ * GUI Class generated using Netbeans
+ * @author martin
+ *
+ */
+
 public class MainWindow extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 241530035487560475L;
@@ -38,6 +44,9 @@ public class MainWindow extends javax.swing.JFrame {
 	
 	private MyModel tableModel;
 	
+	/**
+	 * Generates the MainWindow form	
+	 */
     public MainWindow() {
     	fileNameResourceMapping = new HashMap<String, Resource>();
     	fileListModel = new DefaultListModel<String>();

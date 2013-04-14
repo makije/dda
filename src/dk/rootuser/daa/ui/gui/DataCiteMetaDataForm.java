@@ -4,6 +4,12 @@ import dk.rootuser.daa.pojos.datacite.Description;
 import dk.rootuser.daa.pojos.datacite.Resource;
 import dk.rootuser.daa.pojos.datacite.Title;
 
+/**
+ * GUI Class generated using Netbeans
+ * @author martin
+ *
+ */
+
 public class DataCiteMetaDataForm extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1613879505707690983L;
@@ -11,7 +17,7 @@ public class DataCiteMetaDataForm extends javax.swing.JFrame {
 	private Resource r;
 	
 	/**
-     * Creates new form DataCiteMetaDataForm
+     * Generates and populates the form from the giving resource
      */
     public DataCiteMetaDataForm(Resource r) {
     	this.r = r;

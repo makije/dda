@@ -4,6 +4,12 @@ import java.util.Comparator;
 
 import dk.rootuser.daa.pojos.datacite.Resource;
 
+/**
+ * This sorter can sort a list of resources according to the first title kept in the resource
+ * @author martin
+ *
+ */
+
 public class TitleSorter implements Comparator<Resource>{
 
 	private SortOrder order;

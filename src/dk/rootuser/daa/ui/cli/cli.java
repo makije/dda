@@ -13,6 +13,14 @@ import dk.rootuser.daa.pojos.datacite.Resource;
 import dk.rootuser.daa.sorters.SortOrder;
 import dk.rootuser.daa.sorters.TitleSorter;
 
+/**
+ * CLI<br/>
+ * This class is one way to interact with the data files<br/>
+ * If you are in to this sort of thing
+ * @author martin
+ *
+ */
+
 public class cli {
 
 	private static ArrayList<String> filesToParse = new ArrayList<String>();
@@ -23,9 +31,6 @@ public class cli {
 	private static long sortingStarted = 0;
 	private static long sortingTook = 0;
 	
-	/**
-	 * @param args contains the arguments 
-	 */
 	public static void main(String[] args) {
 
 		if(args.length == 0) {

@@ -19,6 +19,13 @@ import dk.rootuser.daa.pojos.datacite.Size;
 import dk.rootuser.daa.pojos.datacite.Subject;
 import dk.rootuser.daa.pojos.datacite.Title;
 
+/**
+ * The XML Handler for the DataCiteMetaData files
+ * 
+ * @author martin
+ *
+ */
+
 public class DataCiteHandler extends DefaultHandler {
 
 	private Resource resource = null;
@@ -301,6 +308,10 @@ public class DataCiteHandler extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return The parsed instance of Resource
+	 */
 	public Resource getParsedResource() {
 		return this.resource;
 	}
