@@ -8,9 +8,13 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -30,9 +34,12 @@ public class MainWindow extends javax.swing.JFrame {
 	private DefaultComboBoxModel<String> sortOrderModel;
 	private SortOrder titleSortOrder = SortOrder.NONE;
 	
+	private HashMap<String, Resource> fileNameResourceMapping;
+	
 	private MyModel tableModel;
 	
     public MainWindow() {
+    	fileNameResourceMapping = new HashMap<String, Resource>();
     	fileListModel = new DefaultListModel<String>();
     	resources = new ArrayList<Resource>();
     	sortOrderModel = new DefaultComboBoxModel<String>();
@@ -83,6 +90,15 @@ public class MainWindow extends javax.swing.JFrame {
 		});
         fileListScrollPane = new javax.swing.JScrollPane();
         fileList = new javax.swing.JList<String>(fileListModel);
+        fileList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				ListSelectionModel lsm = fileList.getSelectionModel();
+				if(!lsm.isSelectionEmpty() && arg0.getValueIsAdjusting()) {
+					new DataCiteMetaDataForm(fileNameResourceMapping.get(fileListModel.get(lsm.getMinSelectionIndex()))).setVisible(true);
+				}
+			}
+		});
         dataPanel = new javax.swing.JPanel();
         dataScrollPane = new javax.swing.JScrollPane();
         dataTable = new javax.swing.JTable();
@@ -113,7 +129,9 @@ public class MainWindow extends javax.swing.JFrame {
 					
 					for(File f : fd.getFiles()) {
 						try {
-							tableModel.addElement(parser.parse(f.getAbsolutePath()));
+							Resource r = parser.parse(f.getAbsolutePath());
+							fileNameResourceMapping.put(fd.getFile(), r);
+							tableModel.addElement(r);
 						} catch (SAXException e) {
 							e.printStackTrace();
 						} catch (IOException e) {
